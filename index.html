@@ -82,11 +82,18 @@ p{
 </a>
 
 <div class="footer">
-Versão 1.0<br>
+Versão <span id="release"></span> <br>
 © 2026 Ismael Brito
 </div>
 
 </div>
+<script>
+fetch("https://api.github.com/repos/SEU-USUARIO/SEU-REPO/releases/latest")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("release").innerText = data.tag_name;
+  });
+</script>
 
 </body>
 
