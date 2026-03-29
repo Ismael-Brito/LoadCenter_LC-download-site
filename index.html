@@ -64,7 +64,7 @@ p{
     color:#8fa3bf;
 }
 
-    .historico{
+.historico{
     margin-top:30px;
     text-align:left;
 }
@@ -119,33 +119,48 @@ Versão <span id="release"></span> <br>
 © 2026 Ismael Brito
 </div>
 
-</div>
 <div class="historico">
     <h3>Versões anteriores</h3>
     <div id="listaVersoes"></div>
 </div>
+</div>
 <script>
-fetch("https://api.github.com/repos/Ismael-Brito/LoadCenter_LC-download-site/releases/latest")
-  .then(res => res.json())
+fetch("https://api.github.com/repos/Ismael-Brito/LoadCenter_LC-download-site/releases")
+  .then(res => {
+    if(!res.ok){
+      throw new Error("Erro na API: " + res.status);
+    }
+    return res.json();
+  })
   .then(data => {
 
-    if(!data || data.length === 0) return;
-      
-    // versão
-    document.getElementById("release").innerText = data[0].tag_name;
-
-    // Botão da Ultima realese
-    const ultimo = data[0].assets[0];
-    if(ultimo){
-        document.getElementById("downloadBtn").href = ultimo.browser_download_url;
+    // 🔴 verifica se é array mesmo
+    if(!Array.isArray(data)){
+        throw new Error("Resposta inválida da API");
     }
 
-    // lista versões antigas
+    if(data.length === 0){
+        document.getElementById("release").innerText = "Sem versões";
+        return;
+    }
+
+    // versão mais recente
+    const latest = data[0];
+    document.getElementById("release").innerText = latest.tag_name || "N/A";
+
+    // botão download
+    if(latest.assets && latest.assets.length > 0){
+        document.getElementById("downloadBtn").href = latest.assets[0].browser_download_url;
+    }
+
+    // histórico
     const lista = document.getElementById("listaVersoes");
 
     data.slice(1).forEach(release => {
+
+        if(!release.assets || release.assets.length === 0) return;
+
         const asset = release.assets[0];
-        if(!asset) return;
 
         const div = document.createElement("div");
         div.className = "versao-item";
@@ -153,17 +168,17 @@ fetch("https://api.github.com/repos/Ismael-Brito/LoadCenter_LC-download-site/rel
         const dataFormatada = new Date(release.published_at).toLocaleDateString("pt-BR");
 
         div.innerHTML = `
-            <span>
-                ${release.tag_name} - ${dataFormatada}
-            </span>
-            <a href="${asset.browser_download_url}">
-                Baixar
-            </a>
+            <span>${release.tag_name} - ${dataFormatada}</span>
+            <a href="${asset.browser_download_url}">Baixar</a>
         `;
 
         lista.appendChild(div);
     });
 
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById("release").innerText = "Erro ao carregar";
   });
 </script>
 
