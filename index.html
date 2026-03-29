@@ -76,8 +76,8 @@ p{
 <p>Ferramenta automatizada para download das bases Brasindice.</p>
 
 <div class="imagem"><img src="./file.png" alt="Logo"></div>
-
-<a class="botao" href="https://github.com/Ismael-Brito/LoadCenter_LC-download-site/releases/latest/download/Instalador_BrasindiceDownloader.exe">
+    
+<a class="botao" id="downloadBtn" href="#">
 ⬇ Baixar Programa
 </a>
 
@@ -91,7 +91,15 @@ Versão <span id="release"></span> <br>
 fetch("https://api.github.com/repos/Ismael-Brito/LoadCenter_LC-download-site/releases/latest")
   .then(res => res.json())
   .then(data => {
+    // versão
     document.getElementById("release").innerText = data.tag_name;
+
+    // pega o primeiro arquivo do release
+    const asset = data.assets[0];
+
+    if(asset){
+        document.getElementById("downloadBtn").href = asset.browser_download_url;
+    }
   });
 </script>
 
