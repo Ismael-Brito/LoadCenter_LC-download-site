@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Termos de Licenciamento — Load Center</title>
+  <link rel="shortcut icon" href="./logo_32.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --paper: #EDEAE1;
+      --paper-dim: #E1DCCE;
+      --ink: #181614;
+      --ink-soft: #2A2723;
+      --steel: #585F63;
+      --steel-light: #8A8F92;
+      --hazard: #FFC629;
+      --hazard-dark: #C98F00;
+      --signal: #2F6F5E;
+      --signal-soft: #DEEDE7;
+      --line: rgba(24, 22, 20, 0.16);
+      --line-strong: rgba(24, 22, 20, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--hazard);
+      border: 1.5px solid var(--ink);
+    }
+
+    .h-display {
+      font-family: 'Anton', sans-serif;
+      text-transform: uppercase;
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+    }
+
+    .mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--paper);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      background: var(--ink);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      background: var(--hazard);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-soft);
+    }
+
+    .nav-links a:hover {
+      color: var(--signal);
+    }
+
+    .btn-ghost {
+      border: 1.5px solid var(--ink);
+      padding: 8px 16px;
+      text-decoration: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .btn-ghost:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .breadcrumb {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      color: var(--steel);
+      padding: 22px 0 0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--steel);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+
+    .breadcrumb .current {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .page-head {
+      padding: 14px 0 30px;
+      max-width: 720px;
+    }
+
+    .page-head h1 {
+      font-size: clamp(30px, 4.2vw, 46px);
+      margin: 10px 0 14px;
+    }
+
+    .page-meta {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--steel);
+    }
+
+    .hazard-divider {
+      height: 22px;
+      margin-top: 34px;
+      background: repeating-linear-gradient(-45deg, var(--ink), var(--ink) 22px, var(--hazard) 22px, var(--hazard) 44px);
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    /* ---------- NOTICE BANNER ---------- */
+    .notice {
+      border: 1.5px solid var(--ink);
+      background: var(--paper-dim);
+      padding: 18px 22px;
+      margin: 36px 0;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      display: flex;
+      gap: 14px;
+    }
+
+    .notice .notice-mark {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: var(--hazard);
+      border: 1.5px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .notice b {
+      color: var(--ink);
+    }
+
+    /* ---------- DOCUMENT LAYOUT ---------- */
+    .doc-layout {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 48px;
+      padding: 20px 0 90px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 88px;
+      border-left: 2px solid var(--ink);
+      padding-left: 18px;
+    }
+
+    .toc-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .toc ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: toc;
+    }
+
+    .toc li {
+      counter-increment: toc;
+      margin-bottom: 10px;
+    }
+
+    .toc a {
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 13px;
+      line-height: 1.4;
+      display: flex;
+      gap: 8px;
+    }
+
+    .toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--steel);
+      flex-shrink: 0;
+    }
+
+    .toc a:hover {
+      color: var(--signal);
+    }
+
+    .doc-body article {
+      border-top: 1.5px solid var(--ink);
+      padding: 34px 0;
+    }
+
+    .doc-body article:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .clause-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .clause-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 26px;
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--ink);
+      flex-shrink: 0;
+    }
+
+    .clause-head h2 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 19px;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+
+    .doc-body p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      margin: 0 0 14px;
+      max-width: 74ch;
+    }
+
+    .doc-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .doc-body ul {
+      margin: 0 0 14px;
+      padding-left: 0;
+      list-style: none;
+      max-width: 74ch;
+    }
+
+    .doc-body ul li {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      padding: 8px 0 8px 22px;
+      border-top: 1px dashed var(--line);
+      position: relative;
+    }
+
+    .doc-body ul li:first-child {
+      border-top: none;
+    }
+
+    .doc-body ul li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--steel);
+    }
+
+    .doc-body strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .plan-ref {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      border: 1px solid var(--line-strong);
+      padding: 2px 8px;
+      margin: 2px 4px 2px 0;
+    }
+
+    .accept-box {
+      border: 2px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 28px 30px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .accept-box p {
+      color: #B9B4A6;
+      margin: 0;
+      font-size: 14px;
+      max-width: 52ch;
+    }
+
+    .accept-box .split-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--hazard);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .btn-primary {
+      background: var(--hazard);
+      color: var(--ink);
+      border: 2px solid var(--hazard);
+      padding: 14px 24px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 14.5px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: var(--hazard-dark);
+      border-color: var(--hazard-dark);
+    }
+
+    footer {
+      padding: 26px 0;
+      border-top: 1px solid rgba(24, 22, 20, 0.12);
+      color: var(--steel);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    footer a {
+      color: var(--steel);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--signal);
+    }
+
+    @media (max-width:860px) {
+      .doc-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        position: static;
+        border-left: none;
+        border-top: 2px solid var(--ink);
+        padding-left: 0;
+        padding-top: 18px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .accept-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/load-center.html" class="brand"><span class="brand-mark"></span>LOAD CENTER</a>
+      <div class="nav-links">
+        <a href="/load-center.html#licencas">Licenças</a>
+        <a href="/LoadCenter_LC-download-site">Download</a>
+        <a href="/contato.html">Contato</a>
+        <a class="btn-ghost" href="checkout.html">Comprar</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="breadcrumb">
+      <a href="load-center.html">Load Center</a><span>/</span>
+      <span class="current">Termos de licenciamento</span>
+    </div>
+    <div class="page-head">
+      <span class="eyebrow">Uso único · uso privado</span>
+      <h1 class="h-display">TERMOS DE<br>LICENCIAMENTO</h1>
+      <div class="page-meta">
+        <span>Versão 1.0</span>
+        <span>Última atualização: 28 de agosto de 2026</span>
+        <span>Licenciante: Ismael Brito</span>
+      </div>
+    </div>
+
+    <div class="notice">
+      <span class="notice-mark">!</span>
+      <p><b>Modelo de referência.</b> Este documento é um modelo de Termos de Licenciamento de Uso Único elaborado para
+        o Load Center. Ele não substitui a análise de um advogado — antes de publicar como termo vinculante,
+        recomenda-se revisão jurídica para adequação à sua situação e à legislação aplicável (Marco Civil da Internet,
+        LGPD, Código de Defesa do Consumidor, entre outras).</p>
+    </div>
+  </div>
+
+  <div class="hazard-divider"></div>
+
+  <div class="wrap">
+    <div class="doc-layout">
+
+      <nav class="toc">
+        <span class="toc-title">Neste documento</span>
+        <ol>
+          <li><a href="#objeto">Objeto</a></li>
+          <li><a href="#licenca">Concessão da licença</a></li>
+          <li><a href="#restricoes">Restrições de uso</a></li>
+          <li><a href="#propriedade">Propriedade intelectual</a></li>
+          <li><a href="#planos">Planos e vigência</a></li>
+          <li><a href="#sessao">Dados, login e sessão</a></li>
+          <li><a href="#suporte">Atualizações e suporte</a></li>
+          <li><a href="#garantias">Isenção de garantias</a></li>
+          <li><a href="#responsabilidade">Limitação de responsabilidade</a></li>
+          <li><a href="#rescisao">Rescisão</a></li>
+          <li><a href="#alteracoes">Alterações destes termos</a></li>
+          <li><a href="#foro">Legislação e foro</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ol>
+      </nav>
+
+      <div class="doc-body">
+
+        <article id="objeto">
+          <div class="clause-head"><span class="clause-num">01</span>
+            <h2>Objeto</h2>
+          </div>
+          <p>Estes Termos de Licenciamento ("Termos") regulam o uso do software <strong>Load Center</strong>
+            ("Software"), desenvolvido por Ismael Brito ("Licenciante"), destinado à automação de login e download de
+            edições do portal Brasíndice, com organização automática dos arquivos em pastas.</p>
+          <p>Ao instalar, ativar ou utilizar o Software, o usuário ("Licenciado") declara que leu, compreendeu e aceita
+            integralmente estes Termos. Caso não concorde, não deve instalar nem utilizar o Software.</p>
+        </article>
+
+        <article id="licenca">
+          <div class="clause-head"><span class="clause-num">02</span>
+            <h2>Concessão da licença</h2>
+          </div>
+          <p>O Licenciante concede ao Licenciado uma licença de <strong>uso único, pessoal, não exclusiva e
+              intransferível</strong>, para instalar e utilizar o Software em <strong>uma única estação de trabalho por
+              licença adquirida</strong>, conforme o plano contratado.</p>
+          <p>Esta licença não constitui venda do Software nem transferência de titularidade. O Licenciante permanece
+            como único titular de todos os direitos sobre o Software.</p>
+        </article>
+
+        <article id="restricoes">
+          <div class="clause-head"><span class="clause-num">03</span>
+            <h2>Restrições de uso</h2>
+          </div>
+          <p>Sem autorização prévia e por escrito do Licenciante, o Licenciado não pode:</p>
+          <ul>
+            <li>Copiar, redistribuir, sublicenciar, alugar, emprestar ou revender o Software a terceiros;</li>
+            <li>Realizar engenharia reversa, descompilação ou desmontagem do Software, exceto na medida em que isso seja
+              expressamente permitido por lei;</li>
+            <li>Utilizar a mesma licença em mais de uma estação de trabalho simultaneamente;</li>
+            <li>Remover, ocultar ou alterar avisos de direitos autorais, marcas ou identificação do Licenciante
+              presentes no Software;</li>
+            <li>Utilizar o Software para finalidade diversa da automação de download e organização de edições do portal
+              Brasíndice.</li>
+          </ul>
+        </article>
+
+        <article id="propriedade">
+          <div class="clause-head"><span class="clause-num">04</span>
+            <h2>Propriedade intelectual</h2>
+          </div>
+          <p>O Software, incluindo seu código-fonte, interface, documentação e quaisquer materiais associados, é
+            protegido por leis de direitos autorais e propriedade intelectual. Todos os direitos não expressamente
+            concedidos ao Licenciado nestes Termos permanecem reservados ao Licenciante.</p>
+          <p>O fato de o código-fonte estar disponível publicamente no repositório do projeto para fins de consulta e
+            transparência não concede ao Licenciado direito de uso, cópia ou redistribuição além do previsto nestes
+            Termos.</p>
+        </article>
+
+        <article id="planos">
+          <div class="clause-head"><span class="clause-num">05</span>
+            <h2>Planos e vigência</h2>
+          </div>
+          <p>A licença é concedida conforme o plano contratado no momento da compra:</p>
+          <p>
+            <span class="plan-ref">Mensal</span>
+            <span class="plan-ref">Anual</span>
+            <span class="plan-ref">Vitalícia</span>
+          </p>
+          <ul>
+            <li><strong>Plano Mensal:</strong> vigência de 30 dias, renovada automaticamente até cancelamento pelo
+              Licenciado;</li>
+            <li><strong>Plano Anual:</strong> vigência de 12 meses, renovada automaticamente ao final do período, salvo
+              cancelamento;</li>
+            <li><strong>Plano Vitalícia:</strong> licença de uso por prazo indeterminado para 1 (uma) estação, mediante
+              pagamento único, com atualizações incluídas pelo período informado na oferta vigente no momento da compra.
+            </li>
+          </ul>
+          <p>Os valores, condições de pagamento e eventuais alterações de preço estão descritos na página de licenças do
+            Load Center, vigentes no momento da contratação.</p>
+        </article>
+
+        <article id="sessao">
+          <div class="clause-head"><span class="clause-num">06</span>
+            <h2>Dados, login e sessão</h2>
+          </div>
+          <p>O Software utiliza as credenciais fornecidas pelo próprio Licenciado para autenticação no portal
+            Brasíndice. Essas credenciais são de responsabilidade exclusiva do Licenciado, incluindo sua veracidade e o
+            direito de uso do respectivo acesso.</p>
+          <p>A sessão autenticada é armazenada localmente, de forma temporária, por meio de cookies, exclusivamente para
+            evitar logins repetidos durante a execução do Software. O arquivo de cookies é removido ao final do uso.</p>
+          <p>O Licenciante não acessa, coleta ou armazena remotamente as credenciais ou os dados baixados pelo
+            Licenciado através do Software.</p>
+        </article>
+
+        <article id="suporte">
+          <div class="clause-head"><span class="clause-num">07</span>
+            <h2>Atualizações e suporte</h2>
+          </div>
+          <p>O Licenciante poderá disponibilizar atualizações do Software para correção de erros, melhorias ou adequação
+            a mudanças no portal Brasíndice, conforme o plano contratado pelo Licenciado.</p>
+          <p>O suporte técnico é prestado pelos canais indicados na página de contato do Load Center, dentro do horário
+            de atendimento informado, não havendo garantia de disponibilidade fora desse período.</p>
+        </article>
+
+        <article id="garantias">
+          <div class="clause-head"><span class="clause-num">08</span>
+            <h2>Isenção de garantias</h2>
+          </div>
+          <p>O Software é fornecido "no estado em que se encontra" ("as is"), sem garantias de qualquer natureza,
+            expressas ou implícitas, incluindo, sem limitação, garantias de adequação a uma finalidade específica ou de
+            funcionamento ininterrupto.</p>
+          <p>O funcionamento do Software depende da disponibilidade e da estrutura do portal Brasíndice, que está fora
+            do controle do Licenciante. Alterações no portal podem afetar temporariamente o funcionamento do Software
+            até que uma atualização seja disponibilizada.</p>
+        </article>
+
+        <article id="responsabilidade">
+          <div class="clause-head"><span class="clause-num">09</span>
+            <h2>Limitação de responsabilidade</h2>
+          </div>
+          <p>Na máxima extensão permitida pela legislação aplicável, o Licenciante não será responsável por danos
+            indiretos, incidentais, lucros cessantes ou perda de dados decorrentes do uso ou da impossibilidade de uso
+            do Software.</p>
+          <p>A responsabilidade total do Licenciante perante o Licenciado, em qualquer hipótese, fica limitada ao valor
+            efetivamente pago pela licença no período correspondente à ocorrência.</p>
+        </article>
+
+        <article id="rescisao">
+          <div class="clause-head"><span class="clause-num">10</span>
+            <h2>Rescisão</h2>
+          </div>
+          <p>Estes Termos permanecem em vigor enquanto durar a licença contratada. O Licenciante pode suspender ou
+            encerrar a licença em caso de descumprimento destes Termos, sem prejuízo de outras medidas cabíveis.</p>
+          <p>O Licenciado pode cancelar sua licença a qualquer momento pelos canais de contato indicados, observadas as
+            condições de cada plano descritas na cláusula 5.</p>
+        </article>
+
+        <article id="alteracoes">
+          <div class="clause-head"><span class="clause-num">11</span>
+            <h2>Alterações destes termos</h2>
+          </div>
+          <p>O Licenciante pode atualizar estes Termos periodicamente, para refletir mudanças no Software, nos planos ou
+            na legislação aplicável. A versão vigente estará sempre disponível nesta página, com a data da última
+            atualização indicada no topo do documento.</p>
+        </article>
+
+        <article id="foro">
+          <div class="clause-head"><span class="clause-num">12</span>
+            <h2>Legislação e foro</h2>
+          </div>
+          <p>Estes Termos são regidos pelas leis da República Federativa do Brasil. Fica eleito o foro do domicílio do
+            Licenciante para dirimir quaisquer controvérsias decorrentes destes Termos, salvo disposição legal em
+            contrário que garanta foro diverso ao consumidor.</p>
+        </article>
+
+        <article id="contato">
+          <div class="clause-head"><span class="clause-num">13</span>
+            <h2>Contato</h2>
+          </div>
+          <p>Dúvidas sobre estes Termos podem ser enviadas pelos canais descritos na página de contato do Load Center.
+          </p>
+          <div class="accept-box">
+            <div>
+              <span class="split-title mono">Pronto para prosseguir?</span>
+              <p>Ao finalizar a compra, você confirma que leu e aceita estes Termos de Licenciamento de Uso Único.</p>
+            </div>
+            <a class="btn-primary" href="/checkout.html">Ir para o checkout →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>Load Center — desenvolvido por <a href="https://github.com/Ismael-Brito">Ismael Brito</a></span>
+      <span><a href="/load-center.html">Voltar para o início</a></span>
+    </div>
+  </footer>
+
+</body>
+
+</html>
