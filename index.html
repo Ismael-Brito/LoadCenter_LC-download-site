@@ -200,7 +200,7 @@
           <a class="btn-secondary" style="border-color:var(--paper);color:var(--paper);" href="#requisitos">Ver requisitos</a>
         </div>
         <div class="dl-meta">
-          <span>Versão 1.0</span>
+          <span id="release"></span>
           <span>~ 45 MB</span>
           <span>Requer licença ativa</span>
         </div>
@@ -306,6 +306,7 @@
 
         // versão mais recente
         const latest = data[0];
+        document.getElementById("release").textContent = `v${latest.tag_name}`;
 
         // botão download
         if (latest.assets && latest.assets.length > 0) {
