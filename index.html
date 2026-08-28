@@ -183,7 +183,6 @@
     <div class="nav-links">
       <a href="load-center.html">Apresentação</a>
       <a href="load-center.html#licencas">Licenças</a>
-      <a class="btn-ghost" href="https://github.com/Ismael-Brito/LoadCenter_LC-download-site">GitHub</a>
     </div>
   </div>
 </nav>
@@ -197,7 +196,7 @@
         <p class="dl-lede">Instalador único para Windows. Depois de instalado, basta informar a edição do Brasíndice e clicar em Iniciar.</p>
         <div class="dl-btn-row">
           <!-- Substitua o href abaixo pelo link direto do instalador (.exe) publicado nas Releases do GitHub -->
-          <a class="btn-primary" href="https://github.com/Ismael-Brito/LoadCenter_LC-download-site/releases/latest">Baixar instalador (.exe) →</a>
+          <a class="btn-primary" id="downloadBtn" href="#">Baixar instalador (.exe) →</a>
           <a class="btn-secondary" style="border-color:var(--paper);color:var(--paper);" href="#requisitos">Ver requisitos</a>
         </div>
         <div class="dl-meta">
@@ -291,6 +290,31 @@
 </footer>
 
 <script>
+  fetch("https://api.github.com/repos/Ismael-Brito/LoadCenter_LC-download-site/releases")
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Erro na API: " + res.status);
+        }
+        return res.json();
+      })
+      .then(data => {
+
+        // 🔴 verifica se é array mesmo
+        if (!Array.isArray(data)) {
+          throw new Error("Resposta inválida da API");
+        }
+
+        // versão mais recente
+        const latest = data[0];
+
+        // botão download
+        if (latest.assets && latest.assets.length > 0) {
+          document.getElementById("downloadBtn").href = latest.assets[0].browser_download_url;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   const revealEls = document.querySelectorAll('[data-reveal]');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
