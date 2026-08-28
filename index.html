@@ -306,7 +306,7 @@
 
         // versão mais recente
         const latest = data[0];
-        document.getElementById("release").textContent = `v${latest.tag_name}`;
+        document.getElementById("release").textContent = `${latest.tag_name}`;
 
         // botão download
         if (latest.assets && latest.assets.length > 0) {
