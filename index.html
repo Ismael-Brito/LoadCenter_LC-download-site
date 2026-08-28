@@ -3,185 +3,309 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baixar Load Center — instalador para Windows</title>
 <link rel="shortcut icon" href="./logo_32.ico" type="image/x-icon">
-
-<title>Load Center</title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  :root{
+    --paper:#EDEAE1;
+    --paper-dim:#E1DCCE;
+    --ink:#181614;
+    --ink-soft:#2A2723;
+    --steel:#585F63;
+    --steel-light:#8A8F92;
+    --hazard:#FFC629;
+    --hazard-dark:#C98F00;
+    --signal:#2F6F5E;
+    --signal-soft:#DEEDE7;
+    --line:rgba(24,22,20,0.16);
+    --line-strong:rgba(24,22,20,0.32);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--steel);display:inline-flex;align-items:center;gap:8px;
+  }
+  .eyebrow::before{content:"";width:8px;height:8px;background:var(--hazard);border:1.5px solid var(--ink);}
+  .h-display{font-family:'Anton',sans-serif;text-transform:uppercase;line-height:0.92;letter-spacing:0.01em;}
+  .h-section{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
 
-body{
-    margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg,#0f1c2e,#1e3a5f);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    height:100vh;
-}
+  nav{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:2px solid var(--ink);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1120px;margin:0 auto;}
+  .brand{font-family:'Oswald',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.03em;text-decoration:none;display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:26px;height:26px;background:var(--ink);position:relative;flex-shrink:0;}
+  .brand-mark::after{content:"";position:absolute;inset:5px;background:var(--hazard);}
+  .nav-links{display:flex;align-items:center;gap:22px;font-family:'IBM Plex Mono',monospace;font-size:13px;}
+  .nav-links a{text-decoration:none;color:var(--ink-soft);}
+  .nav-links a:hover{color:var(--signal);}
+  .btn-ghost{border:1.5px solid var(--ink);padding:8px 16px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.04em;text-transform:uppercase;}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper);}
 
-.container{
-    text-align:center;
-    background:#14243c;
-    padding:50px;
-    border-radius:10px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.4);
-    width:400px;
-}
+  .btn-primary{
+    background:var(--hazard);color:var(--ink);border:2px solid var(--ink);
+    padding:16px 30px;font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;
+    letter-spacing:0.03em;text-transform:uppercase;text-decoration:none;
+    display:inline-flex;align-items:center;gap:10px;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;box-shadow:4px 4px 0 var(--ink);
+  }
+  .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
+  .btn-primary:active{transform:translate(0,0);box-shadow:2px 2px 0 var(--ink);}
+  .btn-secondary{
+    border:2px solid var(--ink);padding:15px 24px;font-family:'Oswald',sans-serif;font-weight:600;
+    font-size:15px;letter-spacing:0.03em;text-transform:uppercase;text-decoration:none;color:var(--ink);
+  }
+  .btn-secondary:hover{background:var(--ink);color:var(--paper);}
 
-h1{
-    margin-bottom:10px;
-}
+  /* ---------- DOWNLOAD HERO ---------- */
+  .dl-hero{padding:64px 0 0;}
+  .dl-card{
+    background:var(--ink);color:var(--paper);
+    border:2px solid var(--ink);
+    box-shadow:10px 10px 0 var(--line-strong);
+    padding:48px 46px;
+    display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;align-items:center;
+  }
+  .dl-card h1{font-size:clamp(32px,4.4vw,50px);margin:14px 0 16px;}
+  .dl-card .eyebrow{color:var(--hazard);}
+  .dl-card .eyebrow::before{border-color:var(--paper);}
+  .dl-lede{font-size:16px;line-height:1.6;color:#B9B4A6;max-width:44ch;margin:0 0 28px;}
+  .dl-btn-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .dl-meta{
+    margin-top:22px;display:flex;gap:20px;flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9E998A;
+  }
+  .dl-side{
+    border:1.5px dashed rgba(237,234,225,0.28);
+    padding:24px 22px;
+  }
+  .dl-side-title{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#9E998A;display:block;margin-bottom:14px;}
+  .dl-side ul{list-style:none;margin:0;padding:0;}
+  .dl-side li{
+    display:flex;justify-content:space-between;gap:10px;
+    padding:9px 0;border-top:1px solid rgba(237,234,225,0.14);
+    font-size:13.5px;
+  }
+  .dl-side li:first-child{border-top:none;}
+  .dl-side li span:first-child{color:#9E998A;font-family:'IBM Plex Mono',monospace;font-size:11.5px;text-transform:uppercase;}
+  .dl-side li span:last-child{font-weight:500;text-align:right;}
 
-p{
-    color:#c7d2e1;
-}
+  .hazard-divider{
+    height:22px;margin-top:56px;
+    background:repeating-linear-gradient(-45deg,var(--ink),var(--ink) 22px,var(--hazard) 22px,var(--hazard) 44px);
+    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  }
 
-.imagem img{
-    width:150px;
-    margin:20px 0;
-}
+  section{padding:80px 0;}
+  .section-head{max-width:640px;margin-bottom:44px;}
+  .section-head .h-section{font-size:clamp(26px,3.2vw,34px);margin:14px 0 0;}
+  .section-head p{font-size:15px;color:var(--ink-soft);margin-top:12px;max-width:56ch;}
 
-.botao{
-    display:inline-block;
-    margin-top:25px;
-    padding:15px 25px;
-    background:#1e88e5;
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    border-radius:6px;
-    transition:0.3s;
-}
+  /* ---------- STEPS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+  .step-num{
+    font-family:'Anton',sans-serif;font-size:48px;color:transparent;
+    -webkit-text-stroke:2px var(--ink);line-height:1;margin-bottom:12px;display:block;
+  }
+  .step h3{font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase;margin:0 0 8px;}
+  .step p{font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin:0;}
 
-.botao:hover{
-    background:#0d6fd1;
-}
+  /* ---------- REQUIREMENTS + VERIFY ---------- */
+  .req-section{background:var(--paper-dim);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--ink);background:var(--paper);}
+  .split > div{padding:32px 28px;}
+  .split > div:first-child{border-right:2px solid var(--ink);}
+  .split-title{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--steel);margin-bottom:16px;display:block;}
+  .spec-list{list-style:none;margin:0;padding:0;}
+  .spec-list li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px dashed var(--line-strong);font-size:14.5px;}
+  .spec-list li:last-child{border-bottom:none;}
+  .spec-list li span:first-child{color:var(--steel);font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;}
+  .spec-list li span:last-child{font-weight:500;text-align:right;}
+  .badge-ok{display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--signal);margin-bottom:4px;}
+  .badge-ok::before{content:"✓";font-weight:700;}
+  .verify-body p{font-size:14.5px;line-height:1.6;color:var(--ink-soft);margin:0 0 14px;}
+  .verify-body p:last-child{margin-bottom:0;}
 
-.footer{
-    margin-top:25px;
-    font-size:12px;
-    color:#8fa3bf;
-}
+  /* ---------- LICENSE REMINDER ---------- */
+  .license-strip{
+    border:2px solid var(--ink);
+    padding:30px 30px;
+    display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;
+  }
+  .license-strip .lic-text{max-width:60ch;}
+  .license-strip .lic-text .split-title{margin-bottom:8px;}
+  .license-strip p{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  .license-strip strong{color:var(--ink);}
 
-.historico{
-    margin-top:30px;
-    text-align:left;
-}
+  /* ---------- CHANGELOG ---------- */
+  .changelog{border:1.5px solid var(--ink);background:var(--paper);}
+  .changelog-row{display:grid;grid-template-columns:120px 90px 1fr;gap:18px;padding:18px 22px;border-bottom:1px solid var(--line);align-items:baseline;}
+  .changelog-row:last-child{border-bottom:none;}
+  .changelog-version{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;}
+  .changelog-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--steel);}
+  .changelog-desc{font-size:14.5px;color:var(--ink-soft);}
 
-.historico h3{
-    margin-bottom:10px;
-}
+  footer{padding:26px 0;border-top:1px solid rgba(237,234,225,0.18);background:var(--ink);color:#8A8574;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  .footer-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;max-width:1120px;margin:0 auto;padding:0 28px;}
+  footer a{color:#B9B4A6;text-decoration:none;}
+  footer a:hover{color:var(--hazard);}
 
-.versao-item{
-    background:#0f1c2e;
-    padding:10px;
-    border-radius:6px;
-    margin-bottom:8px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-size:14px;
-}
+  [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease;}
+  [data-reveal].in{opacity:1;transform:translateY(0);}
 
-.versao-item a{
-    background:#1e88e5;
-    padding:5px 10px;
-    border-radius:4px;
-    color:white;
-    text-decoration:none;
-    font-size:12px;
-}
-
-.versao-item a:hover{
-    background:#0d6fd1;
-}
-
+  @media (max-width:860px){
+    .dl-card{grid-template-columns:1fr;padding:34px 26px;}
+    .steps{grid-template-columns:1fr;gap:30px;}
+    .split{grid-template-columns:1fr;}
+    .split > div:first-child{border-right:none;border-bottom:2px solid var(--ink);}
+    .changelog-row{grid-template-columns:1fr;gap:4px;}
+    .nav-links{display:none;}
+    .license-strip{flex-direction:column;align-items:flex-start;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal]{opacity:1;transform:none;transition:none;}
+  }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<nav>
+  <div class="nav-inner">
+    <a href="load-center.html" class="brand"><span class="brand-mark"></span>LOAD CENTER</a>
+    <div class="nav-links">
+      <a href="load-center.html">Apresentação</a>
+      <a href="load-center.html#licencas">Licenças</a>
+      <a class="btn-ghost" href="https://github.com/Ismael-Brito/LoadCenter_LC-download-site">GitHub</a>
+    </div>
+  </div>
+</nav>
 
-<h1>Load Center</h1>
+<header class="dl-hero">
+  <div class="wrap">
+    <div class="dl-card" data-reveal>
+      <div>
+        <span class="eyebrow">Instalador · Windows</span>
+        <h1 class="h-display">BAIXE O<br>LOAD CENTER</h1>
+        <p class="dl-lede">Instalador único para Windows. Depois de instalado, basta informar a edição do Brasíndice e clicar em Iniciar.</p>
+        <div class="dl-btn-row">
+          <!-- Substitua o href abaixo pelo link direto do instalador (.exe) publicado nas Releases do GitHub -->
+          <a class="btn-primary" href="https://github.com/Ismael-Brito/LoadCenter_LC-download-site/releases/latest">Baixar instalador (.exe) →</a>
+          <a class="btn-secondary" style="border-color:var(--paper);color:var(--paper);" href="#requisitos">Ver requisitos</a>
+        </div>
+        <div class="dl-meta">
+          <span>Versão 1.0</span>
+          <span>~ 45 MB</span>
+          <span>Requer licença ativa</span>
+        </div>
+      </div>
+      <div class="dl-side">
+        <span class="dl-side-title">Ficha do instalador</span>
+        <ul>
+          <li><span>Arquivo</span><span>LoadCenter_Setup.exe</span></li>
+          <li><span>Sistema</span><span>Windows 10+</span></li>
+          <li><span>Navegador</span><span>Microsoft Edge</span></li>
+          <li><span>Licença</span><span>Uso único / privado</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="hazard-divider"></div>
+</header>
 
-<p>Ferramenta automatizada para download das bases Brasindice.</p>
+<section id="instalar">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Depois de baixar</span>
+      <h2 class="h-section">Três passos até a primeira edição baixada</h2>
+    </div>
+    <div class="steps" data-reveal>
+      <div class="step">
+        <span class="step-num">01</span>
+        <h3>Execute o instalador</h3>
+        <p>Abra o LoadCenter_Setup.exe e siga o assistente de instalação. Não é necessário nenhum ajuste manual.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <h3>Faça login uma vez</h3>
+        <p>Na primeira execução, informe suas credenciais do portal Brasíndice. A sessão é salva via cookies.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <h3>Informe a edição e inicie</h3>
+        <p>Digite o número da edição, clique em Iniciar e acompanhe o progresso até a pasta ficar pronta.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div class="imagem"><img src="./file.png" alt="Logo"></div>
-    
-<a class="botao" id="downloadBtn" href="#">
-⬇ Baixar Programa
-</a>
+<section id="requisitos" class="req-section">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Antes de instalar</span>
+      <h2 class="h-section">Requisitos e verificação</h2>
+    </div>
+    <div class="split" data-reveal>
+      <div>
+        <span class="split-title mono">Requisitos do sistema</span>
+        <ul class="spec-list">
+          <li><span>Sistema</span><span>Windows 10 ou superior</span></li>
+          <li><span>Navegador</span><span>Microsoft Edge instalado</span></li>
+          <li><span>Driver</span><span>Edge WebDriver compatível com sua versão</span></li>
+          <li><span>Espaço em disco</span><span>~ 100 MB livres</span></li>
+          <li><span>Conexão</span><span>Internet ativa</span></li>
+        </ul>
+      </div>
+      <div class="verify-body">
+        <span class="split-title mono">Sobre a segurança do instalador</span>
+        <span class="badge-ok">Sessão de login tratada localmente</span>
+        <p>A sessão do portal é salva via cookies, refeita automaticamente se expirar, e o arquivo é removido após o uso.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div class="footer">
-Versão <span id="release"></span> <br>
-© 2026 Ismael Brito
-</div>
+<section id="licenca-lembrete">
+  <div class="wrap">
+    <div class="license-strip" data-reveal>
+      <div class="lic-text">
+        <span class="split-title mono">Licença necessária</span>
+        <p>O Load Center requer uma licença ativa por estação. Planos a partir de <strong>R$ 49,90/mês</strong>, com opção anual e licença vitalícia.</p>
+      </div>
+      <a class="btn-secondary" href="load-center.html#licencas">Ver planos e preços →</a>
+    </div>
+  </div>
+</section>
 
-<div class="historico">
-    <h3>Versões anteriores</h3>
-    <div id="listaVersoes"></div>
-</div>
-</div>
+<footer>
+  <div class="footer-row">
+    <span>Load Center — desenvolvido por <a href="https://github.com/Ismael-Brito">Ismael Brito</a></span>
+  </div>
+</footer>
+
 <script>
-fetch("https://api.github.com/repos/Ismael-Brito/LoadCenter_LC-download-site/releases")
-  .then(res => {
-    if(!res.ok){
-      throw new Error("Erro na API: " + res.status);
-    }
-    return res.json();
-  })
-  .then(data => {
-
-    // 🔴 verifica se é array mesmo
-    if(!Array.isArray(data)){
-        throw new Error("Resposta inválida da API");
-    }
-
-    if(data.length === 0){
-        document.getElementById("release").innerText = "Sem versões";
-        return;
-    }
-
-    // versão mais recente
-    const latest = data[0];
-    document.getElementById("release").innerText = latest.tag_name || "N/A";
-
-    // botão download
-    if(latest.assets && latest.assets.length > 0){
-        document.getElementById("downloadBtn").href = latest.assets[0].browser_download_url;
-    }
-
-    // histórico
-    const lista = document.getElementById("listaVersoes");
-
-    data.slice(1).forEach(release => {
-
-        if(!release.assets || release.assets.length === 0) return;
-
-        const asset = release.assets[0];
-
-        const div = document.createElement("div");
-        div.className = "versao-item";
-
-        const dataFormatada = new Date(release.published_at).toLocaleDateString("pt-BR");
-
-        div.innerHTML = `
-            <span>${release.tag_name} - ${dataFormatada}</span>
-            <a href="${asset.browser_download_url}">Baixar</a>
-        `;
-
-        lista.appendChild(div);
-    });
-
-  })
-  .catch(err => {
-    console.error(err);
-    document.getElementById("release").innerText = "Erro ao carregar";
-  });
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
 </script>
 
 </body>
-
 </html>
