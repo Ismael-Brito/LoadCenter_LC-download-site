@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato — Load Center</title>
+  <link rel="shortcut icon" href="./logo_32.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --paper: #EDEAE1;
+      --paper-dim: #E1DCCE;
+      --ink: #181614;
+      --ink-soft: #2A2723;
+      --steel: #585F63;
+      --steel-light: #8A8F92;
+      --hazard: #FFC629;
+      --hazard-dark: #C98F00;
+      --signal: #2F6F5E;
+      --signal-soft: #DEEDE7;
+      --line: rgba(24, 22, 20, 0.16);
+      --line-strong: rgba(24, 22, 20, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--hazard);
+      border: 1.5px solid var(--ink);
+    }
+
+    .h-display {
+      font-family: 'Anton', sans-serif;
+      text-transform: uppercase;
+      line-height: 1.30;
+      letter-spacing: 0.01em;
+    }
+
+    .h-section {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--paper);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      background: var(--ink);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      background: var(--hazard);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-soft);
+    }
+
+    .nav-links a:hover {
+      color: var(--signal);
+    }
+
+    .btn-ghost {
+      border: 1.5px solid var(--ink);
+      padding: 8px 16px;
+      text-decoration: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .btn-ghost:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-primary {
+      background: var(--hazard);
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      padding: 15px 26px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+
+    .btn-primary:active {
+      transform: translate(0, 0);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .breadcrumb {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      color: var(--steel);
+      padding: 22px 0 0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--steel);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+
+    .breadcrumb .current {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .page-head {
+      padding: 14px 0 6px;
+      max-width: 640px;
+    }
+
+    .page-head h1 {
+      font-size: clamp(32px, 4.6vw, 54px);
+      margin: 10px 0 14px;
+    }
+
+    .page-head p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .hazard-divider {
+      height: 22px;
+      margin-top: 44px;
+      background: repeating-linear-gradient(-45deg, var(--ink), var(--ink) 22px, var(--hazard) 22px, var(--hazard) 44px);
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    section {
+      padding: 70px 0;
+    }
+
+    .section-head {
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+
+    .section-head .h-section {
+      font-size: clamp(24px, 3vw, 32px);
+      margin: 14px 0 0;
+    }
+
+    /* ---------- CONTACT CHANNELS ---------- */
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 2px solid var(--ink);
+      border-left: 2px solid var(--ink);
+    }
+
+    .channel {
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      padding: 28px 24px;
+      background: var(--paper);
+      transition: background 0.2s ease;
+    }
+
+    .channel:hover {
+      background: var(--signal-soft);
+    }
+
+    .channel-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      letter-spacing: 0.08em;
+      color: var(--signal);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .channel h3 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 17px;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+
+    .channel p {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0 0 12px;
+    }
+
+    .channel a.channel-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      text-decoration: none;
+      color: var(--ink);
+      border-bottom: 1.5px solid var(--hazard);
+      padding-bottom: 1px;
+    }
+
+    .channel a.channel-link:hover {
+      color: var(--signal);
+    }
+
+    /* ---------- FORM ---------- */
+    .contact-section {
+      background: var(--paper-dim);
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.7fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .form-panel {
+      background: var(--paper);
+      border: 1.5px solid var(--ink);
+      padding: 30px 30px 32px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1.5px solid var(--line-strong);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14.5px;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 120px;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--signal);
+    }
+
+    .form-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      color: var(--steel);
+      margin-top: 12px;
+    }
+
+    .side-card {
+      border: 1.5px dashed var(--line-strong);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .side-card .split-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .side-card p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .hours-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .hours-list li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13.5px;
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .hours-list li:last-child {
+      border-bottom: none;
+    }
+
+    .hours-list li span:first-child {
+      color: var(--steel);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-list {
+      border-top: 1.5px solid var(--ink);
+    }
+
+    .faq-item {
+      border-bottom: 1.5px solid var(--ink);
+    }
+
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 4px;
+      cursor: pointer;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+
+    .faq-q .faq-icon {
+      width: 22px;
+      height: 22px;
+      border: 1.5px solid var(--ink);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+    }
+
+    .faq-a p {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 20px 4px;
+      max-width: 70ch;
+    }
+
+    .faq-item.is-open .faq-a {
+      max-height: 220px;
+    }
+
+    .faq-item.is-open .faq-icon {
+      background: var(--hazard);
+    }
+
+    footer {
+      padding: 26px 0;
+      border-top: 1px solid rgba(24, 22, 20, 0.12);
+      color: var(--steel);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    footer a {
+      color: var(--steel);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--signal);
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    [data-reveal].in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width:860px) {
+      .channel-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="load-center.html" class="brand"><span class="brand-mark"></span>LOAD CENTER</a>
+      <div class="nav-links">
+        <a href="load-center.html#licencas">Licenças</a>
+        <a href="/LoadCenter_LC-download-site">Download</a>
+        <a class="btn-ghost" href="checkout.html">Comprar</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="breadcrumb">
+      <a href="load-center.html">Load Center</a><span>/</span>
+      <span class="current">Contato</span>
+    </div>
+    <div class="page-head">
+      <span class="eyebrow">Fale com a gente</span>
+      <h1 class="h-display">DÚVIDA NA CARGA?<br>A GENTE RESOLVE.</h1>
+      <p>Perguntas sobre licença, instalação, cobrança ou qualquer outro assunto — escolha um canal abaixo ou preencha o
+        formulário.</p>
+    </div>
+  </div>
+  <div class="hazard-divider"></div>
+
+  <section>
+    <div class="wrap">
+      <div class="channel-grid" data-reveal>
+        <div class="channel">
+          <span class="channel-tag">E-MAIL</span>
+          <h3>Suporte geral</h3>
+          <p>Dúvidas sobre licença, instalação ou uso do Load Center.</p>
+          <a class="channel-link" href="#">loadcenterdownload@gmail.com</a>
+        </div>
+        <div class="channel">
+          <span class="channel-tag">GITHUB</span>
+          <h3>Problemas técnicos</h3>
+          <p>Encontrou um erro ou comportamento inesperado? Abra uma issue no repositório.</p>
+          <a class="channel-link" href="https://github.com/Ismael-Brito/LoadCenter_LC-download-site/issues">Abrir uma
+            issue →</a>
+        </div>
+        <div class="channel">
+          <span class="channel-tag">ATENDIMENTO</span>
+          <h3>Horário</h3>
+          <p>Segunda a sexta, 9h às 18h (horário de Brasília). Respondemos e-mails em até 1 dia útil.</p>
+          <span class="channel-link mono" style="border-bottom:none;color:var(--steel);">Seg–Sex · 9h–18h</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Contato</span>
+        <h2 class="h-section">Prefere escrever? Manda pra gente</h2>
+      </div>
+
+      <div>
+        <div class="side-card">
+          <span class="split-title mono">Antes de escrever</span>
+          <p>Se sua dúvida é sobre valores de planos, dá uma olhada na página de <a href="load-center.html#licencas"
+              style="color:var(--signal);">licenças</a> — pode ser que já esteja respondida ali.</p>
+        </div>
+        <div class="side-card">
+          <span class="split-title mono">Atendimento</span>
+          <ul class="hours-list">
+            <li><span>Seg–Sex</span><span>9h – 18h</span></li>
+            <li><span>Sáb–Dom</span><span>Fechado</span></li>
+            <li><span>Resposta</span><span>até 1 dia útil</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Antes de perguntar</span>
+        <h2 class="h-section">Perguntas frequentes</h2>
+      </div>
+      <div class="faq-list" data-reveal>
+        <div class="faq-item">
+          <div class="faq-q"><span>Preciso de internet o tempo todo?</span><span class="faq-icon">+</span></div>
+          <div class="faq-a">
+            <p>Sim. O Load Center depende de conexão ativa para fazer login no portal Brasíndice e baixar os arquivos
+              das edições.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Funciona em Mac ou Linux?</span><span class="faq-icon">+</span></div>
+          <div class="faq-a">
+            <p>Não. Hoje o Load Center é compatível apenas com Windows 10 ou superior, com o Microsoft Edge instalado.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Posso usar a mesma licença em mais de um computador?</span><span
+              class="faq-icon">+</span></div>
+          <div class="faq-a">
+            <p>Os planos Mensal, Anual e Vitalícia cobrem 1 estação. Para várias lojas ou filiais, fale com a gente
+              sobre licenciamento por volume.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Como funciona o cancelamento?</span><span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            <p>Planos mensais podem ser cancelados a qualquer momento.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Dá para mudar de plano depois?</span><span class="faq-icon">+</span></div>
+          <div class="faq-a">
+            <p>Sim, é possível migrar entre Mensal, Anual e Vitalícia. Escreva pra gente informando o plano atual e o
+              desejado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>Load Center — desenvolvido por <a href="https://github.com/Ismael-Brito">Ismael Brito</a></span>
+      <span><a href="load-center.html">Voltar para o início</a></span>
+      <span><a href="termos.html">Termos de licenciamento</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-q').addEventListener('click', () => {
+        const wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('is-open'));
+        if (!wasOpen) item.classList.add('is-open');
+      });
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      revealEls.forEach(el => io.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('in'));
+    }
+  </script>
+
+</body>
+
+</html>
