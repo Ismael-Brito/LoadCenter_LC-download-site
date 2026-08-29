@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamento — Load Center</title>
+  <link rel="shortcut icon" href="./logo_32.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --paper: #EDEAE1;
+      --paper-dim: #E1DCCE;
+      --ink: #181614;
+      --ink-soft: #2A2723;
+      --steel: #585F63;
+      --hazard: #FFC629;
+      --hazard-dark: #C98F00;
+      --signal: #2F6F5E;
+      --signal-soft: #DEEDE7;
+      --danger: #B23A2E;
+      --danger-soft: #F3DEDB;
+      --line: rgba(24, 22, 20, 0.16);
+      --line-strong: rgba(24, 22, 20, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--hazard);
+      border: 1.5px solid var(--ink);
+    }
+
+    .mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--paper);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      background: var(--ink);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      background: var(--hazard);
+    }
+
+    .btn-primary {
+      background: var(--hazard);
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      padding: 15px 26px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+
+    .btn-secondary {
+      border: 2px solid var(--ink);
+      padding: 14px 24px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .btn-secondary:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    main {
+      padding: 70px 0 100px;
+    }
+
+    .status-card {
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      box-shadow: 8px 8px 0 var(--line-strong);
+      padding: 38px 36px;
+    }
+
+    .status-icon {
+      width: 52px;
+      height: 52px;
+      border: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Anton', sans-serif;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .status-icon.checking {
+      background: var(--paper-dim);
+    }
+
+    .status-icon.paid {
+      background: var(--signal);
+      color: var(--paper);
+      border-color: var(--signal);
+    }
+
+    .status-icon.pending {
+      background: var(--hazard);
+    }
+
+    .status-icon.error {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+
+    .status-title {
+      font-family: 'Anton', sans-serif;
+      text-transform: uppercase;
+      font-size: clamp(26px, 4vw, 36px);
+      margin: 0 0 12px;
+      line-height: 1.05;
+    }
+
+    .status-text {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      margin: 0 0 26px;
+      max-width: 52ch;
+    }
+
+    .progress-track {
+      height: 12px;
+      background: var(--paper-dim);
+      border: 1px solid var(--line-strong);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: repeating-linear-gradient(45deg, var(--hazard), var(--hazard) 10px, var(--hazard-dark) 10px, var(--hazard-dark) 20px);
+      transition: width 0.4s ease;
+    }
+
+    .order-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--steel);
+      border-top: 1px dashed var(--line-strong);
+      padding-top: 16px;
+      margin-bottom: 26px;
+    }
+
+    .order-meta div {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      gap: 14px;
+    }
+
+    .order-meta span:last-child {
+      color: var(--ink-soft);
+      text-align: right;
+      word-break: break-all;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      padding: 26px 0;
+      border-top: 1px solid rgba(24, 22, 20, 0.12);
+      color: var(--steel);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--steel);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--signal);
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="load-center.html" class="brand"><span class="brand-mark"></span>LOAD CENTER</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <span class="eyebrow">Status do pedido</span>
+
+      <div class="status-card" style="margin-top:18px;">
+        <div id="statusIcon" class="status-icon checking">?</div>
+        <h1 class="status-title" id="statusTitle">Confirmando seu pagamento…</h1>
+        <p class="status-text" id="statusText">Estamos verificando com a InfinitePay se o pagamento foi aprovado. Isso
+          leva só alguns segundos.</p>
+
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="order-meta" id="orderMeta"></div>
+
+        <div class="action-row" id="actionRow"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">Load Center — desenvolvido por <a href="https://github.com/Ismael-Brito">Ismael Brito</a> · <a
+        href="contato.html">precisa de ajuda?</a></div>
+  </footer>
+
+  <script>
+    const WORKER_URL = 'https://loadcenter-infinitepay.loadcenter.workers.dev';
+
+    const params = new URLSearchParams(window.location.search);
+    const orderNsu = params.get('order_nsu');
+    const receiptUrl = params.get('receipt_url');
+    const captureMethod = params.get('capture_method');
+
+    const icon = document.getElementById('statusIcon');
+    const title = document.getElementById('statusTitle');
+    const text = document.getElementById('statusText');
+    const fill = document.getElementById('progressFill');
+    const meta = document.getElementById('orderMeta');
+    const actions = document.getElementById('actionRow');
+
+    function metaRow(label, value) {
+      if (!value) return '';
+      return `<div><span>${label}</span><span>${value}</span></div>`;
+    }
+
+    meta.innerHTML =
+      metaRow('Pedido', orderNsu) +
+      metaRow('Forma de pagamento', captureMethod === 'pix' ? 'Pix' : captureMethod === 'credit_card' ? 'Cartão de crédito' : captureMethod);
+
+    function renderPaid(plano) {
+      icon.className = 'status-icon paid';
+      icon.textContent = '✓';
+      title.textContent = 'Pagamento confirmado!';
+      text.textContent = `Sua licença do Load Center (${plano || 'plano contratado'}) foi liberada. Você também vai receber a confirmação por e-mail.`;
+      fill.style.width = '100%';
+      let btns = '<a class="btn-primary" href="download.html">Baixar o Load Center →</a>';
+      if (receiptUrl) btns += `<a class="btn-secondary" href="${receiptUrl}" target="_blank" rel="noopener">Ver recibo</a>`;
+      actions.innerHTML = btns;
+    }
+
+    function renderPending() {
+      icon.className = 'status-icon pending';
+      icon.textContent = '…';
+      title.textContent = 'Pagamento em processamento';
+      text.textContent = 'Ainda não recebemos a confirmação da InfinitePay. Isso pode levar mais alguns instantes — você vai receber um e-mail assim que for aprovado.';
+      fill.style.width = '60%';
+      let btns = '<a class="btn-secondary" href="javascript:location.reload()">Verificar novamente</a>';
+      if (receiptUrl) btns += `<a class="btn-secondary" href="${receiptUrl}" target="_blank" rel="noopener">Ver recibo</a>`;
+      actions.innerHTML = btns;
+    }
+
+    function renderNotFound() {
+      icon.className = 'status-icon error';
+      icon.textContent = '!';
+      title.textContent = 'Não encontramos esse pedido';
+      text.textContent = 'Se você acabou de pagar, aguarde a confirmação por e-mail. Se o problema continuar, fale com a gente.';
+      fill.style.width = '20%';
+      actions.innerHTML = '<a class="btn-secondary" href="contato.html">Falar com o suporte</a>';
+    }
+
+    function renderNoOrder() {
+      icon.className = 'status-icon error';
+      icon.textContent = '!';
+      title.textContent = 'Nenhum pedido informado';
+      text.textContent = 'Essa página é exibida automaticamente depois de um pagamento. Se você chegou aqui direto, volte para os planos.';
+      document.querySelector('.progress-track').style.display = 'none';
+      actions.innerHTML = '<a class="btn-primary" href="load-center.html#licencas">Ver planos →</a>';
+    }
+
+    async function checkStatus(attempt) {
+      try {
+        const resp = await fetch(WORKER_URL + '/order-status?order_nsu=' + encodeURIComponent(orderNsu));
+        if (resp.status === 404) {
+          if (attempt < 6) return retry(attempt);
+          return renderNotFound();
+        }
+        const data = await resp.json();
+        if (data.status === 'paid') return renderPaid(data.label);
+        if (attempt < 6) return retry(attempt);
+        return renderPending();
+      } catch (err) {
+        if (attempt < 6) return retry(attempt);
+        renderPending();
+      }
+    }
+
+    function retry(attempt) {
+      fill.style.width = Math.min(85, 15 + attempt * 12) + '%';
+      setTimeout(() => checkStatus(attempt + 1), 2500);
+    }
+
+    if (!orderNsu) {
+      renderNoOrder();
+    } else {
+      checkStatus(0);
+    }
+  </script>
+
+</body>
+
+</html>
