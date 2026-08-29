@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar compra — Load Center</title>
+  <link rel="shortcut icon" href="./logo_32.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --paper: #EDEAE1;
+      --paper-dim: #E1DCCE;
+      --ink: #181614;
+      --ink-soft: #2A2723;
+      --steel: #585F63;
+      --steel-light: #8A8F92;
+      --hazard: #FFC629;
+      --hazard-dark: #C98F00;
+      --signal: #2F6F5E;
+      --signal-soft: #DEEDE7;
+      --line: rgba(24, 22, 20, 0.16);
+      --line-strong: rgba(24, 22, 20, 0.32);
+      --danger: #B23A2E;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--hazard);
+      border: 1.5px solid var(--ink);
+    }
+
+    .h-section {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--paper);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      background: var(--ink);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      background: var(--hazard);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+    }
+
+    .nav-links a { text-decoration: none; color: var(--ink-soft); }
+    .nav-links a:hover { color: var(--signal); }
+
+    .breadcrumb {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      color: var(--steel);
+      padding: 22px 0 0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a { text-decoration: none; color: var(--steel); }
+    .breadcrumb a:hover { color: var(--signal); }
+    .breadcrumb .current { color: var(--ink); font-weight: 600; }
+
+    .page-head { padding: 14px 0 40px; }
+
+    .page-head h1 {
+      font-family: 'Anton', sans-serif;
+      text-transform: uppercase;
+      font-size: clamp(30px, 4vw, 44px);
+      margin: 10px 0 0;
+      letter-spacing: 0.01em;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 36px;
+      padding-bottom: 90px;
+      align-items: start;
+    }
+
+    .panel { background: var(--paper); border: 1.5px solid var(--ink); margin-bottom: 26px; }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 24px;
+      border-bottom: 1.5px solid var(--ink);
+      background: var(--paper-dim);
+    }
+
+    .panel-num {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      background: var(--ink);
+      color: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .panel-head h2 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 0;
+    }
+
+    .panel-body { padding: 26px 24px; }
+
+    .plan-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+    .plan-opt {
+      border: 1.5px solid var(--line-strong);
+      padding: 16px 16px 18px;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .plan-opt:hover { border-color: var(--ink); }
+    .plan-opt input { position: absolute; opacity: 0; pointer-events: none; }
+
+    .plan-opt .plan-radio {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--ink);
+      display: inline-block;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .plan-opt input:checked~.plan-radio::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      background: var(--hazard);
+    }
+
+    .plan-opt.is-selected {
+      border-color: var(--ink);
+      background: var(--paper-dim);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    .plan-opt .plan-name {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .plan-opt .plan-price { font-family: 'Anton', sans-serif; font-size: 22px; display: block; }
+
+    .plan-opt .plan-price small {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--steel);
+      margin-left: 3px;
+    }
+
+    .plan-opt .plan-tag {
+      position: absolute;
+      top: -10px;
+      right: 12px;
+      background: var(--hazard);
+      border: 1.5px solid var(--ink);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.06em;
+      padding: 3px 7px;
+    }
+
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { margin-bottom: 16px; }
+    .field.full { grid-column: 1 / -1; }
+
+    .field label {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 7px;
+    }
+
+    .field input, .field select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1.5px solid var(--line-strong);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14.5px;
+    }
+
+    .field input:focus, .field select:focus { outline: none; border-color: var(--signal); }
+
+    .pay-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1.5px dashed var(--line-strong);
+      padding: 16px 18px;
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      margin-bottom: 20px;
+    }
+    .pay-info .pay-icon {
+      flex-shrink: 0; width: 26px; height: 26px;
+      background: var(--signal-soft); border: 1.5px solid var(--signal);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--signal);
+    }
+
+    .terms-row { display: flex; align-items: flex-start; gap: 10px; margin: 20px 0 0; font-size: 13px; color: var(--ink-soft); }
+    .terms-row input { margin-top: 3px; }
+
+    .summary { position: sticky; top: 88px; border: 2px solid var(--ink); background: var(--ink); color: var(--paper); }
+    .summary-head { padding: 22px 24px; border-bottom: 1px solid rgba(237, 234, 225, 0.18); }
+
+    .summary-head .split-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9E998A;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .summary-plan-name { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 19px; text-transform: uppercase; }
+    .summary-body { padding: 22px 24px; }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13.5px;
+      padding: 9px 0;
+      border-bottom: 1px dashed rgba(237, 234, 225, 0.16);
+      color: #C9C4B6;
+    }
+
+    .summary-line:first-child { border-top: none; }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 18px 24px;
+      border-top: 1.5px solid rgba(237, 234, 225, 0.24);
+    }
+
+    .summary-total .label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #9E998A;
+    }
+
+    .summary-total .value { font-family: 'Anton', sans-serif; font-size: 30px; color: var(--hazard); }
+    .summary-feats { list-style: none; margin: 16px 0 0; padding: 0; }
+
+    .summary-feats li { font-size: 12.5px; color: #B9B4A6; padding: 6px 0; padding-left: 18px; position: relative; }
+
+    .summary-feats li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--hazard);
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .summary-cta { padding: 22px 24px 26px; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--hazard);
+      color: var(--ink);
+      border: none;
+      padding: 16px 20px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+    }
+
+    .btn-submit:hover { background: var(--hazard-dark); }
+    .btn-submit:disabled { opacity: 0.6; cursor: wait; }
+
+    .secure-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: #8A8574;
+    }
+
+    .secure-note::before { content: "🔒"; font-size: 11px; }
+
+    dialog#meuModal {
+      border: 2px solid var(--ink);
+      padding: 26px 28px;
+      max-width: 360px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--ink);
+    }
+    dialog#meuModal::backdrop { background: rgba(24,22,20,0.45); }
+    dialog#meuModal p { font-size: 14.5px; line-height: 1.6; margin: 0 0 18px; }
+    dialog#meuModal button {
+      background: var(--hazard); border: 1.5px solid var(--ink); color: var(--ink);
+      font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.03em; font-size: 13px; padding: 10px 18px; cursor: pointer;
+    }
+
+    footer {
+      padding: 26px 0;
+      border-top: 1px solid rgba(24, 22, 20, 0.12);
+      color: var(--steel);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+
+    .footer-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    footer a { color: var(--steel); text-decoration: none; }
+    footer a:hover { color: var(--signal); }
+
+    @media (max-width:900px) {
+      .checkout-grid { grid-template-columns: 1fr; }
+      .summary { position: static; }
+      .plan-options { grid-template-columns: 1fr; }
+      .field-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="load-center.html" class="brand"><span class="brand-mark"></span>LOAD CENTER</a>
+      <div class="nav-links">
+        <a href="load-center.html#licencas">Planos</a>
+        <a href="LoadCenter_LC-download-site.html">Download</a>
+        <a href="contato.html">Contato</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="breadcrumb">
+      <a href="load-center.html">Load Center</a><span>/</span>
+      <a href="load-center.html#licencas">Planos</a><span>/</span>
+      <span class="current">Finalizar compra</span>
+    </div>
+    <div class="page-head">
+      <span class="eyebrow">Checkout seguro</span>
+      <h1>FINALIZAR COMPRA</h1>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="checkout-grid">
+
+      <!-- LEFT: FORM -->
+      <div>
+
+        <!-- STEP 1: PLAN -->
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-num">1</span>
+            <h2>Escolha o plano</h2>
+          </div>
+          <div class="panel-body">
+            <div class="plan-options" id="planOptions">
+              <label class="plan-opt" data-plan="mensal" data-price="49.90" data-period="/mês" data-label="Mensal">
+                <input type="radio" name="plano" value="mensal">
+                <span class="plan-radio"></span>
+                <span class="plan-name">Mensal</span>
+                <span class="plan-price">R$ 49<small>,90/mês</small></span>
+              </label>
+              <label class="plan-opt is-selected" data-plan="anual" data-price="419.00" data-period="/ano"
+                data-label="Anual">
+                <span class="plan-tag">-30%</span>
+                <input type="radio" name="plano" value="anual" checked>
+                <span class="plan-radio"></span>
+                <span class="plan-name">Anual</span>
+                <span class="plan-price">R$ 419<small>/ano</small></span>
+              </label>
+              <label class="plan-opt" data-plan="vitalicia" data-price="897.00" data-period="" data-label="Vitalícia">
+                <input type="radio" name="plano" value="vitalicia">
+                <span class="plan-radio"></span>
+                <span class="plan-name">Vitalícia</span>
+                <span class="plan-price">R$ 897<small>único</small></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <dialog id="meuModal">
+          <p id="modal-text"></p>
+          <button id="fecharModal">Fechar</button>
+        </dialog>
+
+        <!-- STEP 2: BUYER DATA -->
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-num">2</span>
+            <h2>Seus dados</h2>
+          </div>
+          <div class="panel-body">
+            <div class="field-grid">
+              <div class="field full">
+                <label for="nome">Nome completo *</label>
+                <input type="text" id="nome" placeholder="Como está no documento" required>
+              </div>
+              <div class="field">
+                <label for="doc">CPF ou CNPJ *</label>
+                <input type="text" id="doc" placeholder="000.000.000-00" required>
+              </div>
+              <div class="field">
+                <label for="tel">Telefone *</label>
+                <input type="tel" id="tel" placeholder="(00) 00000-0000" required>
+              </div>
+              <div class="field full">
+                <label for="email">E-mail *</label>
+                <input type="email" id="email" placeholder="voce@empresa.com.br" required>
+              </div>
+              <div class="field full">
+                <label for="empresa">Farmácia / distribuidora (opcional)</label>
+                <input type="text" id="empresa" placeholder="Nome do estabelecimento">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: PAYMENT -->
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-num">3</span>
+            <h2>Pagamento</h2>
+          </div>
+          <div class="panel-body">
+            <div class="pay-info">
+              <span class="pay-icon">💳</span>
+              <span>Ao confirmar, você será levado para a tela de pagamento segura da InfinitePay, onde poderá escolher entre <strong>Cartão de crédito</strong> ou <strong>Pix</strong>.</span>
+            </div>
+
+            <label class="terms-row">
+              <input type="checkbox" id="terms" checked required>
+              <span>Li e aceito os <a href="termos.html" style="color:var(--signal);text-decoration:underline;" target="_blank">termos de licenciamento de uso único</a> do Load Center.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: SUMMARY -->
+      <div class="summary">
+        <div class="summary-head">
+          <span class="split-title mono">Resumo do pedido</span>
+          <span class="summary-plan-name" id="sumPlanName">Plano Anual</span>
+        </div>
+        <div class="summary-body">
+          <div class="summary-line"><span>Load Center — 1 estação</span><span id="sumPlanPrice">R$ 419,00/ano</span>
+          </div>
+          <div class="summary-line"><span>Atualizações e suporte</span><span>Incluído</span></div>
+          <ul class="summary-feats" id="sumFeats">
+            <li>Downloads e organização automática</li>
+            <li>Suporte prioritário por e-mail</li>
+            <li>Preço travado por 12 meses</li>
+          </ul>
+        </div>
+        <div class="summary-total">
+          <span class="label">Total hoje</span>
+          <span class="value" id="sumTotal">R$ 419,00</span>
+        </div>
+        <div class="summary-cta">
+          <button class="btn-submit" id="submitBtn">Confirmar compra</button>
+          <div class="secure-note">Pagamento processado pela InfinitePay</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>Load Center — desenvolvido por <a href="https://github.com/Ismael-Brito">Ismael Brito</a></span>
+      <span><a href="load-center.html#licencas">Ver todos os planos</a></span>
+      <span><a href="termos.html">Termos de licenciamento</a></span>
+    </div>
+  </footer>
+
+  <script>
+    const WORKER_URL = 'https://loadcenter-infinitepay.loadcenter.workers.dev';
+
+    const featsByPlan = {
+      mensal: ['Downloads e organização automática', 'Atualizações incluídas', 'Suporte por e-mail'],
+      anual: ['Downloads e organização automática', 'Suporte prioritário por e-mail', 'Preço travado por 12 meses'],
+      vitalicia: ['Uso sem mensalidade', 'Atualizações incluídas por 12 meses', 'Suporte por e-mail']
+    };
+
+    const planOptions = document.querySelectorAll('.plan-opt');
+    const sumPlanName = document.getElementById('sumPlanName');
+    const sumPlanPrice = document.getElementById('sumPlanPrice');
+    const sumTotal = document.getElementById('sumTotal');
+    const sumFeats = document.getElementById('sumFeats');
+
+    function formatBRL(value) {
+      return value.toFixed(2).replace('.', ',');
+    }
+
+    function updateSummary(opt) {
+      const plan = opt.dataset.plan;
+      const price = parseFloat(opt.dataset.price);
+      const period = opt.dataset.period;
+      const label = opt.dataset.label;
+
+      sumPlanName.textContent = 'Plano ' + label;
+      sumPlanPrice.textContent = 'R$ ' + formatBRL(price) + (period || '');
+      sumTotal.textContent = 'R$ ' + formatBRL(price);
+
+      sumFeats.innerHTML = '';
+      (featsByPlan[plan] || []).forEach(f => {
+        const li = document.createElement('li');
+        li.textContent = f;
+        sumFeats.appendChild(li);
+      });
+    }
+
+    planOptions.forEach(opt => {
+      opt.addEventListener('click', () => {
+        planOptions.forEach(o => o.classList.remove('is-selected'));
+        opt.classList.add('is-selected');
+        opt.querySelector('input').checked = true;
+        updateSummary(opt);
+      });
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const preselect = params.get('plano');
+    if (preselect) {
+      const match = document.querySelector('.plan-opt[data-plan="' + preselect + '"]');
+      if (match) {
+        planOptions.forEach(o => o.classList.remove('is-selected'));
+        match.classList.add('is-selected');
+        match.querySelector('input').checked = true;
+        updateSummary(match);
+      }
+    } else {
+      updateSummary(document.querySelector('.plan-opt.is-selected'));
+    }
+
+    // Modal helper
+    const modal = document.getElementById('meuModal');
+    document.getElementById('fecharModal').addEventListener('click', () => modal.close());
+    function showMessage(text) {
+      document.getElementById('modal-text').textContent = text;
+      modal.showModal();
+    }
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const terms = document.getElementById('terms');
+      if (!terms.checked) {
+        terms.closest('.terms-row').style.color = 'var(--danger)';
+        showMessage('Você precisa aceitar os termos de licenciamento para continuar.');
+        return;
+      }
+
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const tel = document.getElementById('tel').value.trim();
+
+      if (!nome || !email || !tel) {
+        showMessage('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      const selectedPlan = document.querySelector('.plan-opt.is-selected');
+      const priceReais = parseFloat(selectedPlan.dataset.price);
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Gerando pagamento…';
+
+      fetch(WORKER_URL + '/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plano: selectedPlan.dataset.plan,
+          label: selectedPlan.dataset.label,
+          priceReais: priceReais,
+          nome: nome,
+          email: email,
+          tel: tel
+        })
+      })
+        .then(async response => {
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || 'Erro ao gerar o link de pagamento');
+          return data;
+        })
+        .then(data => {
+          if (!data.url) throw new Error('Resposta inesperada do servidor');
+          window.location.href = data.url;
+        })
+        .catch(error => {
+          console.error('Erro no checkout:', error);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Confirmar compra';
+          showMessage('Ocorreu um erro ao gerar o pagamento. Tente novamente em instantes.');
+        });
+    });
+  </script>
+
+</body>
+
+</html>
