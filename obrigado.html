@@ -343,7 +343,7 @@
       title.textContent = 'Pagamento confirmado!';
       text.textContent = `Sua licença do Load Center (${plano || 'plano contratado'}) foi liberada. Você também vai receber a confirmação por e-mail.`;
       fill.style.width = '100%';
-      let btns = '<a class="btn-primary" href="LoadCenter_LC-download-site.html">Baixar o Load Center →</a>';
+      let btns = '<a class="btn-primary" href="LoadCenter_LC-download-site">Baixar o Load Center →</a>';
       if (receiptUrl) btns += `<a class="btn-secondary" href="${receiptUrl}" target="_blank" rel="noopener">Ver recibo</a>`;
       actions.innerHTML = btns;
     }
